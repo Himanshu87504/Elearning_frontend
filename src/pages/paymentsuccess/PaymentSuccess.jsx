@@ -7,6 +7,7 @@ import Loading from "../../components/loading/Loading";
 
 const PaymentSuccess = ({ user }) => {
   const [loading, setLoading] = useState(true);
+  const [sessionId, setSessionId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,12 +15,14 @@ const PaymentSuccess = ({ user }) => {
       const params = new URLSearchParams(window.location.search);
       const session_id = params.get("session_id");
       const courseId = params.get("courseId");
+      setSessionId(session_id);
+
       const token = localStorage.getItem("token");
 
       try {
         const { data } = await axios.post(
-          `${server}/api/course/paymentverification`,
-          { session_id, courseId },
+          `${server}/api/verification/${courseId}`,
+          { session_id }, // body
           { headers: { token } }
         );
 
@@ -30,7 +33,7 @@ const PaymentSuccess = ({ user }) => {
           toast.error("Payment verification failed");
         }
       } catch (error) {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong-");
         console.error(error);
       } finally {
         setLoading(false);
@@ -40,7 +43,23 @@ const PaymentSuccess = ({ user }) => {
     verifyPayment();
   }, [navigate]);
 
-  return <>{loading && <Loading />}</>;
+  if (loading) {
+    return <Loading />;
+  }
+
+  return (
+    <div className="payment-success-page">
+      {user && (
+        <div className="success-message">
+          <h2>Payment failed to verify ❌</h2>
+          <p>Verification failed</p>
+          <p>
+            <strong>Reference no:</strong> {sessionId}
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default PaymentSuccess;
