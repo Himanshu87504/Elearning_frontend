@@ -191,7 +191,7 @@ const Lecture = ({ user }) => {
                   {lecture.video ? (
                     <>
                       <video
-                        src={lecture.video}}
+                        src={lecture.video}
                         width={"100%"}
                         controls
                         controlsList="nodownload noremoteplayback"
