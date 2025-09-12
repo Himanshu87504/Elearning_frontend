@@ -4,6 +4,7 @@ import { server } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Loading from "../../components/loading/Loading";
+import { UserData } from "../../context/UserContext";
 
 const PaymentSuccess = ({ user }) => {
   const [loading, setLoading] = useState(true);
