@@ -10,7 +10,8 @@ const PaymentSuccess = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [sessionId, setSessionId] = useState(null);
   const navigate = useNavigate();
-
+  const {fetchUser} = UserData();
+ 
   useEffect(() => {
     const verifyPayment = async () => {
       const params = new URLSearchParams(window.location.search);
@@ -52,8 +53,8 @@ const PaymentSuccess = ({ user }) => {
     <div className="payment-success-page">
       {user && (
         <div className="success-message">
-          <h2>Payment failed to verify ❌</h2>
-          <p>Verification failed</p>
+          <h2>Payment successfully</h2>
+          <p>Verificatio Don</p>
           <p>
             <strong>Reference no:</strong> {sessionId}
           </p>
