@@ -32,7 +32,7 @@ const AdminDashbord = ({ user }) => {
   return (
     <div>
       <Layout>
-        <h1 style="text-align: center; font-size: 36px; color: #8a4baf;">Layout in Admin Dashboard</h1>
+        <h1>Layout in Admin Dashboard</h1>
         
         <div className="main-content">
           <div className="box">
