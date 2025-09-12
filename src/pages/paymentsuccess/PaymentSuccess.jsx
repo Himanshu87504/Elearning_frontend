@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { server } from "../../main";
 import axios from "axios";
@@ -9,10 +9,15 @@ import { UserData } from "../../context/UserContext";
 const PaymentSuccess = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [sessionId, setSessionId] = useState(null);
-  const navigate = useNavigate();
-  const {fetchUser} = UserData();
- 
+  const { fetchUser } = UserData();
+
+  // Ref to ensure effect runs only once
+  const hasRun = useRef(false);
+
   useEffect(() => {
+    if (hasRun.current) return; // Already ran, skip
+    hasRun.current = true;
+
     const verifyPayment = async () => {
       const params = new URLSearchParams(window.location.search);
       const session_id = params.get("session_id");
@@ -24,13 +29,15 @@ const PaymentSuccess = ({ user }) => {
       try {
         const { data } = await axios.post(
           `${server}/api/verification/${courseId}`,
-          { session_id }, // body
+          { session_id },
           { headers: { token } }
         );
 
         if (data.success) {
           toast.success(data.message);
-          navigate(`/course/study/${data.course._id}`);
+          await fetchUser();
+          // Optionally navigate
+          // navigate(`/course/study/${data.course._id}`);
         } else {
           toast.error("Payment verification failed");
         }
@@ -43,7 +50,7 @@ const PaymentSuccess = ({ user }) => {
     };
 
     verifyPayment();
-  }, [navigate]);
+  }, []);
 
   if (loading) {
     return <Loading />;
@@ -53,8 +60,8 @@ const PaymentSuccess = ({ user }) => {
     <div className="payment-success-page">
       {user && (
         <div className="success-message">
-          <h2>Payment successfully</h2>
-          <p>Verificatio Don</p>
+          <h2>Payment successful</h2>
+          <p>Verification Done</p>
           <p>
             <strong>Reference no:</strong> {sessionId}
           </p>
