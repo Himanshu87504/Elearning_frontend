@@ -57,7 +57,7 @@ const AdminUsers = ({ user }) => {
     <Layout>
       <div className="users">
 
-        <h1>All Users</h1>
+        <h1 className="heading ">All Users</h1>
         <table border={"black"}>
           <thead>
             <tr>
