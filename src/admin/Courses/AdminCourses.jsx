@@ -87,7 +87,7 @@ const AdminCourses = ({ user }) => {
 
       <div className="admin-courses">
         <div className="left">
-          <h1>All Courses</h1>
+          <h1 className="heading ">All Courses</h1>
           <div className="dashboard-content">
             {courses && courses.length > 0 ? (
               courses.map((e) => {
