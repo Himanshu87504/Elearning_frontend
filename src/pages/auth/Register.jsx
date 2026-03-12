@@ -12,13 +12,14 @@ const Register = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    alert(
-      "Demo version: Nodemailer is not working.\n\n" +
-      "You can use the admin page credentials:\n\n" +
-      "Email: hs9199211@mail.com\n" +
-      "Password: 12345\n\n" +
-      "In the future we will try to fix it."
-    );
+   alert(
+  "Demo Version Notice\n\n" +
+  "Email sending (Nodemailer) is currently not working on the live demo.\n\n" +
+  "You can log in using the admin demo credentials:\n\n" +
+  "Email: hs9199211@mail.com\n" +
+  "Password: 12345\n\n" +
+  "We will try to fix the email feature in a future update."
+);
   }, []);
 
   const submitHandler = async (e) => {
