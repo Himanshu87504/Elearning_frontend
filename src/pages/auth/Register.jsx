@@ -17,6 +17,13 @@ const Register = () => {
   return (
     <div className="auth-page">
       <div className="auth-form">
+     alert(
+"Demo version: Nodemailer is not working.\n\n" +
+"You can use the admin page credentials:\n\n" +
+"Email: hs9199211@mail.com\n" +
+"Password: 12345\n\n" +
+"In the future we will try to fix it."
+);
         <h2>Register</h2>
         <form onSubmit={submitHandler}>
           <label htmlFor="name">Name</label>
