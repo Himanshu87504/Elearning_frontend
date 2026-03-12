@@ -16,6 +16,7 @@ const Register = () => {
   };
   return (
     <div className="auth-page">
+      <h1>page</h2>
       <div className="auth-form">
      alert(
 "Demo version: Nodemailer is not working.\n\n" +
