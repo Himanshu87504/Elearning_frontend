@@ -81,7 +81,7 @@ export const UserContextProvider = ({ children }) => {
           token: localStorage.getItem("token"),
         },
       });
-      
+
       setUser(data.user);
       setIsAuth(true);
     } catch (error) {

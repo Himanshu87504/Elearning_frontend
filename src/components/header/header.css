@@ -1,44 +1,187 @@
-header {
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+.hv2-wrap {
+  font-family: 'DM Sans', sans-serif;
+  background: #2c2018;
+  border-top: 3px solid #b08a52;
+  border-bottom: 1px solid #3e2a18;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.hv2-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 68px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
+  justify-content: space-between;
+  animation: hFadeDown 0.5s cubic-bezier(.22, .68, 0, 1.2) both;
+}
 
-  .logo {
-    font-size: 25px;
-    font-weight: 600;
-    color: #8a4baf;
-
-    @media (max-width: 768px) {
-      font-size: 18px;
-    }
+@keyframes hFadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 
-  .link {
-    display: flex;
-    gap: 2rem;
-
-    @media (max-width: 768px) {
-      gap: 0.5rem;
-    }
-
-    a {
-      text-decoration: none;
-      color: #333;
-      transition: 0.3s;
-
-      &:hover {
-        color: #8a4baf;
-      }
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.icon-large {
-  font-size: 25px;
-  /* Adjust the size as needed */
-  /* color: #e7a521;   Adjust the color as needed */
+/* LOGO */
+.hv2-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.hv2-logo-serif {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.45rem;
+  font-style: italic;
+  color: #f5e6d3;
+}
+
+.hv2-logo-dot {
+  width: 6px;
+  height: 6px;
+  background: #b08a52;
+  border-radius: 50%;
+  margin: 0 2px 3px;
+}
+
+.hv2-logo-sans {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e8d8c3;
+}
+
+/* NAV */
+.hv2-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hv2-link {
+  font-size: 13.5px;
+  color: #d6c2a8;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.hv2-link:hover {
+  color: #ffffff;
+  background: #3e2a18;
+}
+
+.hv2-link.active {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.hv2-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: #b08a52;
+  border-radius: 2px;
+}
+
+/* RIGHT SIDE */
+.hv2-pill-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 14px;
+  padding-left: 14px;
+  border-left: 1px solid #4a3726;
+}
+
+/* LOGIN */
+.hv2-login {
+  font-size: 13px;
+  font-weight: 500;
+  color: #f5e6d3;
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 7px;
+  border: 1.5px solid #b08a52;
+  transition: all 0.2s ease;
+}
+
+.hv2-login:hover {
+  background: #3e2a18;
+}
+
+/* CTA BUTTON */
+.hv2-cta {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2c2018;
+  background: #b08a52;
+  text-decoration: none;
+  padding: 7px 18px;
+  border-radius: 7px;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.hv2-cta:hover {
+  background: #c9a46a;
+}
+
+/* ACCOUNT */
+.hv2-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  padding: 5px 12px 5px 6px;
+  border-radius: 30px;
+  border: 1px solid #4a3726;
+  transition: all 0.2s ease;
+}
+
+.hv2-account:hover {
+  border-color: #b08a52;
+  background: #3e2a18;
+}
+
+.hv2-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #b08a52;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #2c2018;
+}
+
+.hv2-account-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #f5e6d3;
+}
+
+.hv2-chevron {
+  width: 14px;
+  height: 14px;
+  color: #d6c2a8;
 }

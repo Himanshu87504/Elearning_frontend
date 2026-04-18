@@ -10,18 +10,14 @@ import { CourseData } from "../../context/CourseContext";
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
   const { user, isAuth } = UserData();
-
   const { fetchCourses } = CourseData();
 
   const deleteHandler = async (id) => {
-    if (confirm("Are you sure you want to delete this course")) {
+    if (confirm("Are you sure you want to delete this course?")) {
       try {
         const { data } = await axios.delete(`${server}/api/course/${id}`, {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
+          headers: { token: localStorage.getItem("token") },
         });
-
         toast.success(data.message);
         fetchCourses();
       } catch (error) {
@@ -29,61 +25,72 @@ const CourseCard = ({ course }) => {
       }
     }
   };
+
+  const isSubscribed = user?.subscription?.includes(course._id);
+  const isAdmin = user?.role === "admin";
+
   return (
     <div className="course-card">
-      <img src={course.image} alt="" className="course-image" />
+      <div className="card-img-wrap">
+        <img src={course.image} alt={course.title} className="course-image" />
+        {course.price === 0 && <span className="card-pill pill-free">Free</span>}
+        <span className="card-duration">⏱ {course.duration} weeks</span>
+      </div>
 
-      <h3>{course.title}</h3>
-      <p>Instructor- {course.createdBy}</p>
-      <p>Duration- {course.duration} weeks</p>
-      <p>Price- ₹{course.price}</p>
-      {isAuth ? (
-        <>
-          {user && user.role !== "admin" ? (
-            <>
-              {user.subscription.includes(course._id) ? (
-                <button
-                  onClick={() => navigate(`/course/study/${course._id}`)}
-                  className="common-btn"
-                >
-                  Study
-                </button>
-              ) : (
-                <button
-                  onClick={() => navigate(`/course/${course._id}`)}
-                  className="common-btn"
-                >
+      <div className="card-body">
+        <div class="card-meta-top">
+          <span className="card-category">{course.category || "Course"}</span>
+        </div>
 
-                  Get Started
-                </button>
-              )}
-            </>
+        <h3 className="card-title">{course.title}</h3>
+        <p className="card-instructor">by <strong>{course.createdBy}</strong></p>
+
+        <div className="card-divider" />
+
+        <div className="card-footer">
+          <div className="card-price">
+            {course.price === 0 ? (
+              <>
+                <span className="price-value free-price">Free</span>
+                <span className="price-label">always</span>
+              </>
+            ) : (
+              <>
+                <span className="price-value">₹{course.price}</span>
+                <span className="price-label">one-time</span>
+              </>
+            )}
+          </div>
+
+          {isAuth ? (
+            isAdmin ? (
+              <button className="card-btn btn-study" onClick={() => navigate(`/course/study/${course._id}`)}>
+                ▶ Study
+              </button>
+            ) : isSubscribed ? (
+              <button className="card-btn btn-study" onClick={() => navigate(`/course/study/${course._id}`)}>
+                ▶ Study
+              </button>
+            ) : (
+              <button className="card-btn btn-primary" onClick={() => navigate(`/course/${course._id}`)}>
+                Get Started →
+              </button>
+            )
           ) : (
-            <button
-              onClick={() => navigate(`/course/study/${course._id}`)}
-              className="common-btn"
-            >
-              Study
+            <button className="card-btn btn-primary" onClick={() => navigate("/login")}>
+              Get Started →
             </button>
           )}
-        </>
-      ) : (
-        <button onClick={() => navigate("/login")} className="common-btn">
-          Get Started
-        </button>
-      )}
+        </div>
 
-      <br />
-
-      {user && user.role === "admin" && (
-        <button
-          onClick={() => deleteHandler(course._id)}
-          className="common-btn"
-          style={{ background: "red" }}
-        >
-          Delete
-        </button>
-      )}
+        {isAdmin && (
+          <div className="card-delete">
+            <button className="btn-delete" onClick={() => deleteHandler(course._id)}>
+              🗑 Delete Course
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

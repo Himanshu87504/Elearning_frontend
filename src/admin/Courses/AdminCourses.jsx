@@ -19,7 +19,10 @@ const categories = [
 const AdminCourses = ({ user }) => {
   const navigate = useNavigate();
 
-  if (user && user.role !== "admin") return navigate("/");
+  if (user && user.role !== "admin") {
+    navigate("/");
+    return null;
+  }
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -34,9 +37,7 @@ const AdminCourses = ({ user }) => {
   const changeImageHandler = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
-
     reader.onloadend = () => {
       setImagePrev(reader.result);
       setImage(file);
@@ -50,7 +51,6 @@ const AdminCourses = ({ user }) => {
     setBtnLoading(true);
 
     const myForm = new FormData();
-
     myForm.append("title", title);
     myForm.append("description", description);
     myForm.append("category", category);
@@ -61,110 +61,105 @@ const AdminCourses = ({ user }) => {
 
     try {
       const { data } = await axios.post(`${server}/api/course/new`, myForm, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
+        headers: { token: localStorage.getItem("token") },
       });
 
       toast.success(data.message);
       setBtnLoading(false);
       await fetchCourses();
-      setImage("");
-      setTitle("");
-      setDescription("");
-      setDuration("");
-      setImagePrev("");
-      setCreatedBy("");
-      setPrice("");
-      setCategory("");
+      setImage(""); setTitle(""); setDescription("");
+      setDuration(""); setImagePrev(""); setCreatedBy("");
+      setPrice(""); setCategory("");
     } catch (error) {
       toast.error(error.response.data.message);
+      setBtnLoading(false);
     }
   };
 
   return (
     <Layout>
-
       <div className="admin-courses">
+        {/* Left — course list */}
         <div className="left">
-          <h1 className="heading ">All Courses</h1>
+          <h1 className="heading">All Courses</h1>
           <div className="dashboard-content">
             {courses && courses.length > 0 ? (
-              courses.map((e) => {
-                return <CourseCard key={e._id} course={e} />;
-              })
+              courses.map((e) => <CourseCard key={e._id} course={e} />)
             ) : (
-              <p>No Courses Yet</p>
+              <p>No courses yet</p>
             )}
           </div>
         </div>
 
+        {/* Right — add course form */}
         <div className="right">
           <div className="add-course">
             <div className="course-form">
               <h2>Add Course</h2>
               <form onSubmit={submitHandler}>
-                <label htmlFor="text">Title</label>
+                <label>Title</label>
                 <input
                   type="text"
+                  placeholder="e.g. React for Beginners"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
 
-                <label htmlFor="text">Description</label>
+                <label>Description</label>
                 <input
                   type="text"
+                  placeholder="Short course description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
                 />
 
-                <label htmlFor="text">Price</label>
+                <label>Price (₹)</label>
                 <input
                   type="number"
+                  placeholder="0"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   required
                 />
 
-                <label htmlFor="text">createdBy</label>
+                <label>Created By</label>
                 <input
                   type="text"
+                  placeholder="Instructor name"
                   value={createdBy}
                   onChange={(e) => setCreatedBy(e.target.value)}
                   required
                 />
 
+                <label>Category</label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
+                  required
                 >
-                  <option value={""}>Select Category</option>
-                  {categories.map((e) => (
-                    <option value={e} key={e}>
-                      {e}
-                    </option>
+                  <option value="">Select category</option>
+                  {categories.map((c) => (
+                    <option value={c} key={c}>{c}</option>
                   ))}
                 </select>
 
-                <label htmlFor="text">Duration</label>
+                <label>Duration (hrs)</label>
                 <input
                   type="number"
+                  placeholder="e.g. 12"
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                   required
                 />
 
-                <input type="file" required onChange={changeImageHandler} />
-                {imagePrev && <img src={imagePrev} alt="" width={300} />}
+                <label>Cover Image</label>
+                <input type="file" accept="image/*" onChange={changeImageHandler} required />
+                {imagePrev && <img src={imagePrev} alt="Preview" />}
 
-                <button
-                  type="submit"
-                  disabled={btnLoading}
-                  className="common-btn"
-                >
-                  {btnLoading ? "Please Wait..." : "Add"}
+                <button type="submit" disabled={btnLoading} className="common-btn">
+                  {btnLoading ? "Uploading..." : "Add Course"}
                 </button>
               </form>
             </div>

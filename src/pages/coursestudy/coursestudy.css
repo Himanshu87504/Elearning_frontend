@@ -1,34 +1,228 @@
-.course-study-page {
-  padding: 50px 0;
-  background-color: #f5f5f5;
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.cs-page {
+  min-height: 100vh;
+  background: #f7f4ef;
+  padding: 2rem 1rem 3rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.cs-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── Eyebrow ── */
+.cs-eyebrow {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  min-height: 80vh;
+  gap: 8px;
+  margin-bottom: 1.4rem;
+}
 
-  h2 {
-    font-size: 24px;
-    color: #8a4baf;
-    text-align: center;
+.cs-eyebrow-line {
+  width: 24px;
+  height: 1.5px;
+  background: #b5965a;
+}
+
+.cs-eyebrow-text {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b5965a;
+}
+
+/* ── Card ── */
+.cs-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Hero Image ── */
+.cs-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+  background: #e8e3da;
+}
+
+.cs-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cs-img-wrap:hover .cs-img {
+  transform: scale(1.04);
+}
+
+.cs-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(20, 16, 10, 0.5));
+}
+
+.cs-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4a3f2f;
+}
+
+/* ── Body ── */
+.cs-body {
+  padding: 1.6rem 1.8rem 2rem;
+  background: linear-gradient(160deg, #fffdf9 0%, #f9f6f0 100%);
+}
+
+.cs-top {
+  margin-bottom: 1.2rem;
+}
+
+.cs-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+
+.cs-tag {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid #d4c4a8;
+  border-radius: 999px;
+  padding: 3px 10px;
+  color: #8a7560;
+  background: transparent;
+}
+
+.cs-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: #1c1712;
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+}
+
+.cs-desc {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #6b5c47;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ── Meta ── */
+.cs-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1.4rem;
+}
+
+.cs-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f2ede4;
+  border-radius: 10px;
+}
+
+.cs-meta-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: #e8dfd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cs-meta-icon svg {
+  width: 13px;
+  height: 13px;
+  stroke: #7a6548;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-meta-label {
+  font-size: 0.6rem;
+  color: #a08f78;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.cs-meta-value {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2e2416;
+}
+
+/* ── CTA Button ── */
+.cs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: #1c1712;
+  color: #f7f4ef;
+  border-radius: 11px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(28, 23, 18, 0.2);
+}
+
+.cs-btn:hover {
+  background: #b5965a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(181, 150, 90, 0.35);
+  color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .cs-body {
+    padding: 1.4rem 1.2rem 1.6rem;
   }
 
-  h4 {
-    font-size: 21px;
-    color: #8a4baf;
-    text-align: center;
+  .cs-img-wrap {
+    height: 160px;
   }
 
-  h5 {
-    font-size: 20px;
-    color: #8a4baf;
-    text-align: center;
-  }
-
-  a {
-    text-decoration: none;
-    background-color: white;
-    padding: 5px 10px;
-    border: 1px solid black;
-    border-radius: 5px;
+  .cs-meta {
+    grid-template-columns: 1fr;
   }
 }

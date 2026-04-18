@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
@@ -7,33 +6,74 @@ import { UserData } from "../../context/UserContext";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { user, loading, isAuth } = UserData(); // Destructure context values
+  const { user, loading, isAuth } = UserData();
 
-  // Handle loading state
-  if (loading) {
-    return <p>Loading...</p>; // Display a loading message or spinner
-  }
+  if (loading) return <p>Loading...</p>;
 
-  // Display the user's name if authenticated, otherwise show "Guest"
   const displayName = isAuth && user ? user.name : "Guest";
-  // const User =user.email; add condition other wise give error
-  // console.log(user); direct object use not allowed
-
 
   return (
-    <div>
-      <div className="home">
-        <h1>Welcome, {displayName}</h1>
-        {/* <h1>{User}!</h1> */}
-        {/* Use displayName for a friendly greeting */}
+    <div className="home">
+      <div className="home-inner">
 
-        <div className="home-content">
-          <h1>Welcome to our E-learning Platform</h1>
-          <p>Learn, Grow, Excel</p>
-          <button onClick={() => navigate("/courses")} className="common-btn">
-            Get Started
-          </button>
+        <div className="home-hero">
+          {/* Left side — text content */}
+          <div className="home-left">
+            <div className="home-greeting">
+              <span className="greeting-wave" />
+              Welcome back, {displayName}
+            </div>
+
+            <h1 className="home-title">
+              Learn. Grow.<br /><em>Excel.</em>
+            </h1>
+
+            <p className="home-tagline">Your journey starts here.</p>
+
+            <p className="home-desc">
+              Access expert-crafted courses, build real skills, and accelerate
+              your career — all in one place.
+            </p>
+
+            <div className="home-actions">
+              <button className="btn-main" onClick={() => navigate("/courses")}>
+                Get Started →
+              </button>
+              <button className="btn-secondary" onClick={() => navigate("/courses")}>
+                Browse Courses
+              </button>
+            </div>
+          </div>
+
+          {/* Right side — gif */}
+          <div className="home-right">
+            <div className="gif-wrapper">
+              <img
+                src="https://media.tenor.com/4PfFSKZRA48AAAAi/hi-greetings.gif"
+                alt="greeting"
+                className="hero-gif"
+              />
+            </div>
+          </div>
         </div>
+
+        <div className="home-stats">
+          <div className="stat-item">
+            <div className="stat-number">2<em>k</em>+</div>
+            <div className="stat-label">Students</div>
+          </div>
+          <div className="stat-divider" />
+          <div className="stat-item">
+            <div className="stat-number">48</div>
+            <div className="stat-label">Courses</div>
+          </div>
+          <div className="stat-divider" />
+          <div className="stat-item">
+            <div className="stat-number">4.<em>9</em></div>
+            <div className="stat-label">Avg Rating</div>
+          </div>
+        </div>
+
       </div>
       <Testimonials />
     </div>
@@ -41,3 +81,4 @@ const Home = () => {
 };
 
 export default Home;
+
