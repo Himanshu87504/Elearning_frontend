@@ -1,34 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap');
 
-/* ════════════════════════════
-   ROOT TOKENS
-════════════════════════════ */
+/* ══════════════════════════════
+   TOKENS
+══════════════════════════════ */
 :root {
-  --ac-bg: #f7f6f3;
+  --ac-bg: #f5f4f1;
   --ac-surface: #ffffff;
-  --ac-border: rgba(0, 0, 0, 0.07);
-  --ac-border-mid: rgba(0, 0, 0, 0.11);
-  --ac-purple: #6c47c9;
-  --ac-purple-soft: #ede9fb;
+  --ac-purple: #5b3fc4;
+  --ac-purple-hover: #4930a0;
+  --ac-purple-soft: #eeebfb;
   --ac-purple-mid: #c4b5f4;
-  --ac-text: #18151f;
-  --ac-muted: #7c7688;
-  --ac-label: #4a4558;
-  --ac-radius: 14px;
-  --ac-radius-sm: 9px;
-  --ac-shadow: 0 2px 12px rgba(60, 40, 120, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --ac-shadow-focus: 0 0 0 3px rgba(108, 71, 201, 0.18);
+  --ac-text: #1a1625;
+  --ac-muted: #6e6a7c;
+  --ac-label: #3d3852;
+  --ac-border: rgba(0, 0, 0, 0.08);
+  --ac-border-mid: rgba(0, 0, 0, 0.13);
+  --ac-radius: 12px;
+  --ac-radius-sm: 8px;
+  --ac-focus: 0 0 0 3px rgba(91, 63, 196, 0.16);
 }
 
-/* ════════════════════════════
-   PAGE WRAPPER
-════════════════════════════ */
+/* ══════════════════════════════
+   PAGE LAYOUT
+══════════════════════════════ */
 .admin-courses {
-  font-family: 'Sora', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 28px;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
   padding: 28px;
   background: var(--ac-bg);
   min-height: 100vh;
@@ -36,146 +36,175 @@
   align-items: start;
 }
 
-/* ════════════════════════════
-   LEFT — course list
-════════════════════════════ */
-.admin-courses .left {
-  min-width: 0;
+/* ══════════════════════════════
+   LEFT PANEL
+══════════════════════════════ */
+.ac-left {}
+
+.ac-panel-header {
+  margin-bottom: 20px;
 }
 
-.admin-courses .left .heading {
-  font-family: 'Instrument Serif', serif;
-  font-size: 28px;
+.ac-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
   font-weight: 400;
   color: var(--ac-text);
   letter-spacing: -0.02em;
-  margin-bottom: 4px;
   line-height: 1.2;
 }
 
-.admin-courses .left .heading em {
+.ac-title em {
   font-style: italic;
   color: var(--ac-purple);
 }
 
-.left-subheading {
+.ac-sub {
   font-size: 13px;
   color: var(--ac-muted);
-  font-weight: 400;
-  margin-bottom: 24px;
-}
-
-.admin-courses .left .dashboard-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
   margin-top: 4px;
 }
 
-/* ════════════════════════════
-   RIGHT — form panel
-════════════════════════════ */
-.admin-courses .right {
+.ac-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.ac-empty {
+  grid-column: 1 / -1;
+  padding: 48px 24px;
+  text-align: center;
+  background: var(--ac-surface);
+  border-radius: var(--ac-radius);
+  border: 1.5px dashed var(--ac-border-mid);
+  color: var(--ac-muted);
+}
+
+.ac-empty svg {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 10px;
+  opacity: 0.3;
+}
+
+.ac-empty p {
+  font-size: 14px;
+}
+
+/* ══════════════════════════════
+   RIGHT PANEL — sticky
+══════════════════════════════ */
+.ac-right {
   position: sticky;
   top: 24px;
 }
 
-/* ════════════════════════════
+/* ══════════════════════════════
    FORM CARD
-════════════════════════════ */
-.admin-courses .right .course-form {
+══════════════════════════════ */
+.ac-form-card {
   background: var(--ac-surface);
   border-radius: var(--ac-radius);
   border: 0.5px solid var(--ac-border-mid);
-  box-shadow: var(--ac-shadow);
   overflow: hidden;
 }
 
-/* Card header bar */
-.course-form-header {
-  padding: 20px 24px 18px;
+.ac-form-header {
+  padding: 18px 22px 16px;
   border-bottom: 0.5px solid var(--ac-border);
-  background: linear-gradient(135deg, #f5f1ff 0%, #faf9ff 100%);
+  background: #f9f7ff;
 }
 
-.course-form-header h2 {
-  font-family: 'Instrument Serif', serif;
-  font-size: 20px;
+.ac-form-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 19px;
   font-weight: 400;
   color: var(--ac-text);
-  margin: 0 0 2px;
   letter-spacing: -0.01em;
 }
 
-.course-form-header h2 em {
+.ac-form-header h2 em {
   font-style: italic;
   color: var(--ac-purple);
 }
 
-.course-form-header p {
+.ac-form-header p {
   font-size: 12px;
   color: var(--ac-muted);
-  margin: 0;
+  margin-top: 3px;
 }
 
-/* Card body */
-.course-form-body {
-  padding: 22px 24px 24px;
+.ac-form-body {
+  padding: 20px 22px 24px;
 }
 
-/* ════════════════════════════
+/* ══════════════════════════════
    FORM ELEMENTS
-════════════════════════════ */
-.admin-courses form {
+══════════════════════════════ */
+.ac-form-body form {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 14px;
 }
 
-.form-group {
+/* Two-column row (price + duration) */
+.fg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Single field group */
+.fg {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  gap: 5px;
 }
 
-.admin-courses form label {
-  font-size: 12px;
+.fg label {
+  font-size: 11px;
   font-weight: 600;
   color: var(--ac-label);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  margin-bottom: 6px;
 }
 
-.admin-courses form input,
-.admin-courses form select {
-  font-family: 'Sora', sans-serif;
-  font-size: 13.5px;
+.fg input,
+.fg select {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
   color: var(--ac-text);
-  width: 100%;
-  padding: 10px 13px;
+  padding: 9px 12px;
   background: #faf9ff;
   border: 1px solid var(--ac-border-mid);
   border-radius: var(--ac-radius-sm);
   outline: none;
-  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+  width: 100%;
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
 
-.admin-courses form input::placeholder {
-  color: #bbb8c8;
+.fg input::placeholder {
+  color: #c0bcd0;
 }
 
-.admin-courses form input:focus,
-.admin-courses form select:focus {
+.fg input:focus,
+.fg select:focus {
   border-color: var(--ac-purple);
   background: #fff;
-  box-shadow: var(--ac-shadow-focus);
+  box-shadow: var(--ac-focus);
 }
 
-/* Select arrow */
+.char-count {
+  font-size: 11px;
+  color: var(--ac-muted);
+  text-align: right;
+}
+
+/* Custom select arrow */
 .select-wrap {
   position: relative;
 }
@@ -183,7 +212,7 @@
 .select-wrap::after {
   content: '';
   position: absolute;
-  right: 13px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   width: 0;
@@ -194,123 +223,209 @@
   pointer-events: none;
 }
 
-/* ════════════════════════════
-   IMAGE PREVIEW
-════════════════════════════ */
-.image-preview-wrap {
-  width: 100%;
-  height: 160px;
+/* ══════════════════════════════
+   DROP ZONE
+══════════════════════════════ */
+.ac-drop-zone {
+  position: relative;
+  border: 1.5px dashed var(--ac-border-mid);
   border-radius: var(--ac-radius-sm);
-  overflow: hidden;
-  border: 1px solid var(--ac-border-mid);
-  background: #f3f1fb;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-preview-wrap img,
-.admin-courses form img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: var(--ac-radius-sm);
-  margin-bottom: 16px;
-  display: block;
-}
-
-.image-preview-empty {
-  font-size: 12px;
-  color: var(--ac-muted);
+  padding: 20px 16px;
   text-align: center;
+  background: #faf9ff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
 }
 
-/* ════════════════════════════
-   BUTTON
-════════════════════════════ */
-.common-btn {
-  font-family: 'Sora', sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 11px 20px;
-  border: none;
-  background: var(--ac-purple);
-  color: #fff;
-  border-radius: var(--ac-radius-sm);
+.ac-drop-zone:hover,
+.ac-drop-zone.dragging {
+  border-color: var(--ac-purple);
+  background: var(--ac-purple-soft);
+}
+
+.ac-drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
   cursor: pointer;
-  transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
-  letter-spacing: 0.01em;
   width: 100%;
+  height: 100%;
+}
+
+.ac-drop-zone svg {
+  width: 24px;
+  height: 24px;
+  color: var(--ac-muted);
+  margin-bottom: 8px;
+  opacity: 0.45;
+}
+
+.ac-drop-zone p {
+  font-size: 12.5px;
+  color: var(--ac-muted);
+}
+
+.ac-drop-zone p span {
+  color: var(--ac-purple);
+  font-weight: 500;
+}
+
+.ac-drop-zone small {
+  font-size: 11px;
+  color: #bbb8c8;
+  display: block;
   margin-top: 4px;
 }
 
-.common-btn:hover {
-  background: #5535b0;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(108, 71, 201, 0.28);
+/* ══════════════════════════════
+   IMAGE PREVIEW
+══════════════════════════════ */
+.ac-preview-wrap {
+  position: relative;
 }
 
-.common-btn:active {
+.ac-preview-img {
+  width: 100%;
+  height: 148px;
+  object-fit: cover;
+  border-radius: var(--ac-radius-sm);
+  border: 0.5px solid var(--ac-border-mid);
+  display: block;
+}
+
+.ac-remove-img {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ac-text);
+  border: 0.5px solid var(--ac-border-mid);
+  border-radius: 6px;
+  padding: 4px 9px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s;
+}
+
+.ac-remove-img:hover {
+  background: #fff;
+}
+
+/* ══════════════════════════════
+   SUBMIT BUTTON
+══════════════════════════════ */
+.ac-submit-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 11px 20px;
+  background: var(--ac-purple);
+  color: #fff;
+  border: none;
+  border-radius: var(--ac-radius-sm);
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+}
+
+.ac-submit-btn:hover:not(:disabled) {
+  background: var(--ac-purple-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(91, 63, 196, 0.28);
+}
+
+.ac-submit-btn:active:not(:disabled) {
   transform: translateY(0);
 }
 
-/* ════════════════════════════
-   RESPONSIVE — Tablet (≤ 960px)
-════════════════════════════ */
-@media (max-width: 960px) {
+.ac-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading spinner */
+.ac-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ac-spin 0.65s linear infinite;
+}
+
+@keyframes ac-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ══════════════════════════════
+   RESPONSIVE — Tablet (≤ 900px)
+══════════════════════════════ */
+@media (max-width: 900px) {
   .admin-courses {
     grid-template-columns: 1fr;
-    padding: 20px;
-    gap: 24px;
+    padding: 18px;
+    gap: 20px;
   }
 
-  .admin-courses .right {
+  .ac-right {
     position: static;
   }
 
-  .admin-courses .right .course-form {
-    max-width: 600px;
+  .ac-form-card {
+    max-width: 560px;
     margin: 0 auto;
     width: 100%;
   }
 }
 
-/* ════════════════════════════
-   RESPONSIVE — Mobile (≤ 540px)
-════════════════════════════ */
-@media (max-width: 540px) {
+/* ══════════════════════════════
+   RESPONSIVE — Mobile (≤ 560px)
+══════════════════════════════ */
+@media (max-width: 560px) {
   .admin-courses {
-    padding: 14px;
-    gap: 18px;
+    padding: 12px;
+    gap: 16px;
   }
 
-  .admin-courses .left .heading {
+  .ac-title {
     font-size: 22px;
   }
 
-  .admin-courses .left .dashboard-content {
+  .ac-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .fg-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ac-form-header,
+  .ac-form-body {
+    padding: 14px 16px;
+  }
+
+  .ac-form-body form {
     gap: 12px;
-  }
-
-  .course-form-header,
-  .course-form-body {
-    padding: 16px 18px;
-  }
-
-  .admin-courses form input,
-  .admin-courses form select {
-    font-size: 13px;
-    padding: 9px 12px;
   }
 }
 
-/* ════════════════════════════
-   RESPONSIVE — Small Mobile (≤ 380px)
-════════════════════════════ */
-@media (max-width: 380px) {
-  .admin-courses .left .dashboard-content {
+/* ══════════════════════════════
+   RESPONSIVE — Small (≤ 360px)
+══════════════════════════════ */
+@media (max-width: 360px) {
+  .ac-grid {
     grid-template-columns: 1fr;
   }
 }
