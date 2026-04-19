@@ -1,66 +1,314 @@
-.testimonials {
-  padding: 80px 0;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=Outfit:wght@300;400;500;600&display=swap');
 
-  h2 {
-    font-size: 32px;
-    color: #8a4baf;
-    margin-bottom: 30px;
+/* ══════════════════════════════
+   TOKENS
+══════════════════════════════ */
+:root {
+  --t-purple-fill: #f0ebf8;
+  --t-purple-text: #5a3d8a;
+  --t-purple-border: #cdb8e8;
+  --t-teal-fill: #e0f4ee;
+  --t-teal-text: #0f6e56;
+  --t-teal-border: #9fe1cb;
+  --t-coral-fill: #faecea;
+  --t-coral-text: #993c1d;
+  --t-coral-border: #f5c4b3;
+  --t-text: #1a1510;
+  --t-muted: #888070;
+  --t-faint: #aaa098;
+  --t-divider: #e8e3db;
+  --t-star: #e8a020;
+}
+
+/* ══════════════════════════════
+   SECTION
+══════════════════════════════ */
+.testimonials {
+  font-family: 'Outfit', sans-serif;
+  width: 100%;
+  max-width: 1100px;
+  margin: 72px auto 0;
+  padding: 0 0 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════
+   HEADER
+══════════════════════════════ */
+.t-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.t-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--t-purple-text);
+  background: var(--t-purple-fill);
+  border: 0.5px solid var(--t-purple-border);
+  border-radius: 100px;
+  padding: 5px 14px;
+  margin-bottom: 16px;
+}
+
+.t-title {
+  font-family: 'Fraunces', serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--t-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.t-title em {
+  font-style: italic;
+  color: #7b5ea7;
+}
+
+.t-sub {
+  font-size: 15px;
+  color: var(--t-muted);
+  font-weight: 300;
+}
+
+/* ══════════════════════════════
+   CARDS — shared
+══════════════════════════════ */
+.t-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 0.5px solid var(--t-divider);
+  padding: 28px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.t-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(26, 21, 16, 0.09);
+}
+
+/* Accent top border per color */
+.t-card--purple {
+  border-top: 3px solid var(--t-purple-border);
+}
+
+.t-card--teal {
+  border-top: 3px solid var(--t-teal-border);
+}
+
+.t-card--coral {
+  border-top: 3px solid var(--t-coral-border);
+}
+
+/* Stars */
+.t-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.t-star {
+  width: 14px;
+  height: 14px;
+  color: var(--t-star);
+  flex-shrink: 0;
+}
+
+/* Message */
+.t-message {
+  font-size: 14.5px;
+  color: #4a4540;
+  font-weight: 300;
+  line-height: 1.75;
+  flex: 1;
+}
+
+/* Footer */
+.t-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--t-divider);
+}
+
+/* Avatar */
+.t-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.t-avatar--purple {
+  background: var(--t-purple-fill);
+  color: var(--t-purple-text);
+}
+
+.t-avatar--teal {
+  background: var(--t-teal-fill);
+  color: var(--t-teal-text);
+}
+
+.t-avatar--coral {
+  background: var(--t-coral-fill);
+  color: var(--t-coral-text);
+}
+
+.t-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--t-text);
+  line-height: 1.3;
+}
+
+.t-pos {
+  font-size: 12px;
+  color: var(--t-faint);
+  font-weight: 400;
+}
+
+/* ══════════════════════════════
+   DESKTOP GRID  (> 600px)
+══════════════════════════════ */
+.t-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* Carousel hidden on desktop */
+.t-carousel {
+  display: none;
+}
+
+/* ══════════════════════════════
+   MOBILE  ≤ 600px — carousel
+══════════════════════════════ */
+@media (max-width: 600px) {
+  .testimonials {
+    margin-top: 48px;
+    padding: 0 0 60px;
   }
 
-  .testmonials-cards {
+  .t-header {
+    margin-bottom: 32px;
+  }
+
+  .t-title {
+    font-size: 30px;
+  }
+
+  .t-sub {
+    font-size: 14px;
+  }
+
+  /* Hide grid, show carousel */
+  .t-grid {
+    display: none;
+  }
+
+  .t-carousel {
+    display: block;
+    padding: 0 18px;
+  }
+
+  /* Track: overflow hidden on wrapper */
+  .t-carousel {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .t-carousel-track {
     display: flex;
-    flex-wrap: wrap;
+    gap: 16px;
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .t-card--slide {
+    min-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Dots */
+  .t-dots {
+    display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 8px;
+    margin-top: 20px;
+  }
 
-    .testimonial-card {
-      background-color: white;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+  .t-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--t-divider);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
 
-      @media (max-width: 768px) {
-        width: 80%;
-        text-align: center;
-      }
+  .t-dot--active {
+    background: #7b5ea7;
+    transform: scale(1.3);
+  }
 
-      .student-image {
-        img {
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          object-fit: cover;
-          margin-bottom: 10px;
-        }
-      }
+  /* Arrows */
+  .t-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
 
-      .message {
-        font-size: 16px;
-        color: #333;
-        margin-bottom: 10px;
-      }
+  .t-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 0.5px solid var(--t-divider);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
 
-      .info {
-        text-align: center;
-      }
+  .t-arrow:hover {
+    background: var(--t-purple-fill);
+    border-color: var(--t-purple-border);
+  }
 
-      .name {
-        font-size: 18px;
-        font-weight: bold;
-        color: #8a4baf;
-        margin-bottom: 5px;
-      }
+  .t-arrow svg {
+    width: 16px;
+    height: 16px;
+    color: #7b5ea7;
+  }
+}
 
-      .position {
-        font-size: 14px;
-        color: #666;
-      }
-    }
+/* ══════════════════════════════
+   TABLET  601px – 900px
+══════════════════════════════ */
+@media (min-width: 601px) and (max-width: 900px) {
+  .t-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .t-title {
+    font-size: 34px;
   }
 }
