@@ -72,12 +72,12 @@ const CourseCard = ({ course }) => {
                 ▶ Study
               </button>
             ) : (
-              <button className="card-btn" onClick={() => navigate(`/course/${course._id}`)}>
+              <button className="card-btn btn-primary" onClick={() => navigate(`/course/${course._id}`)}>
                 Get Started →
               </button>
             )
           ) : (
-            <button className="card-btn" onClick={() => navigate("/login")}>
+            <button className="card-btn " onClick={() => navigate("/login")}>
               Get Started →
             </button>
           )}
