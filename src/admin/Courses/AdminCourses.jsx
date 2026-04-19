@@ -1,276 +1,183 @@
-import React, { useState } from "react";
-import Layout from "../Utils/Layout";
+import React, { useEffect, useState } from "react";
+import "./users.css";
 import { useNavigate } from "react-router-dom";
-import { CourseData } from "../../context/CourseContext";
-import CourseCard from "../../components/coursecard/CourseCard";
-import "./admincourses.css";
-import toast from "react-hot-toast";
 import axios from "axios";
 import { server } from "../../main";
+import Layout from "../Utils/Layout";
+import toast from "react-hot-toast";
 
-const categories = [
-  "Web Development",
-  "App Development",
-  "Game Development",
-  "Data Science",
-  "Artificial Intelligence",
-];
-
-const AdminCourses = ({ user }) => {
+const AdminUsers = ({ user }) => {
   const navigate = useNavigate();
 
-  if (user && user.role !== "admin") {
+  if (user && user.mainrole !== "superadmin") {
     navigate("/");
     return null;
   }
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [createdBy, setCreatedBy] = useState("");
-  const [duration, setDuration] = useState("");
-  const [image, setImage] = useState("");
-  const [imagePrev, setImagePrev] = useState("");
-  const [btnLoading, setBtnLoading] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [updatingId, setUpdatingId] = useState(null);
 
-  const { courses, fetchCourses } = CourseData();
-
-  const processFile = (file) => {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImagePrev(reader.result);
-      setImage(file);
-    };
-  };
-
-  const changeImageHandler = (e) => {
-    processFile(e.target.files[0]);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => setIsDragging(false);
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    processFile(e.dataTransfer.files[0]);
-  };
-
-  const resetForm = () => {
-    setImage(""); setTitle(""); setDescription("");
-    setDuration(""); setImagePrev(""); setCreatedBy("");
-    setPrice(""); setCategory("");
-  };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setBtnLoading(true);
-
-    const myForm = new FormData();
-    myForm.append("title", title);
-    myForm.append("description", description);
-    myForm.append("category", category);
-    myForm.append("price", price);
-    myForm.append("createdBy", createdBy);
-    myForm.append("duration", duration);
-    myForm.append("file", image);
-
+  async function fetchUsers() {
+    setLoading(true);
     try {
-      const { data } = await axios.post(`${server}/api/course/new`, myForm, {
+      const { data } = await axios.get(`${server}/api/users`, {
         headers: { token: localStorage.getItem("token") },
       });
+      setUsers(data.users);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => { fetchUsers(); }, []);
+
+  const updateRole = async (id) => {
+    if (!confirm("Are you sure you want to update this user's role?")) return;
+    setUpdatingId(id);
+    try {
+      const { data } = await axios.put(
+        `${server}/api/user/${id}`,
+        {},
+        { headers: { token: localStorage.getItem("token") } }
+      );
       toast.success(data.message);
-      await fetchCourses();
-      resetForm();
+      fetchUsers();
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
-      setBtnLoading(false);
+      setUpdatingId(null);
     }
   };
 
+  const initials = (name) =>
+    name ? name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "?";
+
+  const filtered = users.filter(
+    (u) =>
+      u.name?.toLowerCase().includes(search.toLowerCase()) ||
+      u.email?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const adminCount = users.filter((u) => u.role === "admin").length;
+
   return (
     <Layout>
-      <div className="admin-courses">
+      <div className="au-page">
 
-        {/* ── LEFT: course list ── */}
-        <div className="ac-left">
-          <div className="ac-panel-header">
-            <h1 className="ac-title">All <em>Courses</em></h1>
-            <p className="ac-sub">
-              {courses?.length
-                ? `${courses.length} course${courses.length !== 1 ? "s" : ""} published`
-                : "No courses yet"}
+        {/* Header */}
+        <div className="au-header">
+          <div>
+            <h1 className="au-title">All <em>Users</em></h1>
+            <p className="au-sub">
+              {users.length} total &nbsp;·&nbsp; {adminCount} admin{adminCount !== 1 ? "s" : ""}
             </p>
           </div>
-
-          <div className="ac-grid">
-            {courses && courses.length > 0 ? (
-              courses.map((c) => <CourseCard key={c._id} course={c} />)
-            ) : (
-              <div className="ac-empty">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                <p>No courses yet. Add your first one →</p>
-              </div>
-            )}
+          <div className="au-search-wrap">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <circle cx="9" cy="9" r="6" /><path d="M15 15l-3-3" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="au-search"
+            />
           </div>
         </div>
 
-        {/* ── RIGHT: add course form ── */}
-        <div className="ac-right">
-          <div className="ac-form-card">
-
-            <div className="ac-form-header">
-              <h2>Add <em>Course</em></h2>
-              <p>Fill in the details to publish a new course</p>
-            </div>
-
-            <div className="ac-form-body">
-              <form onSubmit={submitHandler}>
-
-                <div className="fg">
-                  <label htmlFor="ac-title">Title</label>
-                  <input
-                    id="ac-title"
-                    type="text"
-                    placeholder="e.g. React for Beginners"
-                    maxLength={80}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                  />
-                  <span className="char-count">{title.length}/80</span>
-                </div>
-
-                <div className="fg">
-                  <label htmlFor="ac-desc">Description</label>
-                  <input
-                    id="ac-desc"
-                    type="text"
-                    placeholder="Short course description"
-                    maxLength={160}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                  />
-                  <span className="char-count">{description.length}/160</span>
-                </div>
-
-                <div className="fg-row">
-                  <div className="fg">
-                    <label htmlFor="ac-price">Price (₹)</label>
-                    <input
-                      id="ac-price"
-                      type="number"
-                      placeholder="0"
-                      min="0"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="fg">
-                    <label htmlFor="ac-dur">Duration (hrs)</label>
-                    <input
-                      id="ac-dur"
-                      type="number"
-                      placeholder="e.g. 12"
-                      min="1"
-                      value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="fg">
-                  <label htmlFor="ac-instructor">Instructor</label>
-                  <input
-                    id="ac-instructor"
-                    type="text"
-                    placeholder="Instructor name"
-                    value={createdBy}
-                    onChange={(e) => setCreatedBy(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="fg">
-                  <label htmlFor="ac-cat">Category</label>
-                  <div className="select-wrap">
-                    <select
-                      id="ac-cat"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      required
-                    >
-                      <option value="">Select category</option>
-                      {categories.map((c) => (
-                        <option value={c} key={c}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="fg">
-                  <label>Cover Image</label>
-                  {imagePrev ? (
-                    <div className="ac-preview-wrap">
-                      <img src={imagePrev} alt="Preview" className="ac-preview-img" />
-                      <button
-                        type="button"
-                        className="ac-remove-img"
-                        onClick={() => { setImage(""); setImagePrev(""); }}
-                      >
-                        ✕ Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <div
-                      className={`ac-drop-zone${isDragging ? " dragging" : ""}`}
-                      onDragOver={handleDragOver}
-                      onDragLeave={handleDragLeave}
-                      onDrop={handleDrop}
-                    >
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={changeImageHandler}
-                        required
-                      />
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M4 16l4-4 4 4 4-6 4 6" />
-                        <rect x="2" y="3" width="20" height="18" rx="2" />
-                      </svg>
-                      <p><span>Choose file</span> or drag &amp; drop</p>
-                      <small>PNG, JPG, WebP up to 5MB</small>
-                    </div>
-                  )}
-                </div>
-
-                <button type="submit" className="ac-submit-btn" disabled={btnLoading}>
-                  {btnLoading ? (
-                    <>
-                      <span className="ac-spinner" /> Uploading...
-                    </>
-                  ) : (
-                    "Add Course"
-                  )}
-                </button>
-
-              </form>
-            </div>
+        {/* Stats strip */}
+        <div className="au-stats">
+          <div className="au-stat">
+            <span className="au-stat-num">{users.length}</span>
+            <span className="au-stat-label">Total</span>
           </div>
+          <div className="au-stat">
+            <span className="au-stat-num">{adminCount}</span>
+            <span className="au-stat-label">Admins</span>
+          </div>
+          <div className="au-stat">
+            <span className="au-stat-num">{users.length - adminCount}</span>
+            <span className="au-stat-label">Users</span>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="au-table-wrap">
+          {loading ? (
+            <div className="au-loading">
+              <span className="au-spinner" />
+              <p>Loading users…</p>
+            </div>
+          ) : filtered.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th className="au-col-num">#</th>
+                  <th className="au-col-user">User</th>
+                  <th className="au-col-role">Role</th>
+                  <th className="au-col-action">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((u, i) => (
+                  <tr key={u._id}>
+                    <td className="au-num">{i + 1}</td>
+                    <td>
+                      <div className="au-name-cell">
+                        <div className={`au-avatar au-avatar--${u.role === "admin" ? "admin" : "user"}`}>
+                          {initials(u.name)}
+                        </div>
+                        <div className="au-name-info">
+                          <p className="au-name">{u.name}</p>
+                          <p className="au-email">{u.email}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span className={`au-badge au-badge--${u.role === "admin" ? "admin" : "user"}`}>
+                        {u.role}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        className="au-btn"
+                        onClick={() => updateRole(u._id)}
+                        disabled={updatingId === u._id}
+                        title="Update Role"
+                      >
+                        {updatingId === u._id ? (
+                          <span className="au-spinner au-spinner--sm" />
+                        ) : (
+                          /* shield / role swap icon */
+                          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className="au-btn-icon">
+                            <path d="M10 2L4 5v5c0 3.5 2.5 6.5 6 7.5 3.5-1 6-4 6-7.5V5l-6-3z" strokeLinejoin="round" />
+                            <path d="M7.5 10l2 2 3-3" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                        <span className="au-btn-label">Update Role</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="au-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" strokeLinecap="round" />
+              </svg>
+              <p>{search ? `No users matching "${search}"` : "No users found"}</p>
+              {search && (
+                <button className="au-clear-btn" onClick={() => setSearch("")}>Clear search</button>
+              )}
+            </div>
+          )}
         </div>
 
       </div>
@@ -278,4 +185,4 @@ const AdminCourses = ({ user }) => {
   );
 };
 
-export default AdminCourses;
+export default AdminUsers;
