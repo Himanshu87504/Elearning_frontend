@@ -39,45 +39,66 @@ const Sidebar = () => {
 
   const navItems = menuItems.filter((item) => item.visible && !item.isLogout);
   const logoutItem = menuItems.find((item) => item.isLogout);
+  const allVisible = menuItems.filter((item) => item.visible);
 
   return (
-    <div className="sidebar">
-      {/* Brand */}
-      <div className="sidebar-brand">
-        <div className="sidebar-brand-icon">
-          <span />
+    <>
+      {/* ── Sidebar: desktop (full) + tablet (icon-only) ── */}
+      <div className="sidebar">
+        <div className="sidebar-brand">
+          <div className="sidebar-brand-icon">
+            <span />
+          </div>
+          <span className="sidebar-brand-name">AdminPanel</span>
         </div>
-        <span className="sidebar-brand-name">AdminPanel</span>
+
+        <ul>
+          {navItems.map((item, idx) => (
+            <li
+              key={idx}
+              className={location.pathname === item.path ? "active" : ""}
+            >
+              <Link to={item.path}>
+                <div className="icon">{item.icon}</div>
+                <span className="sidebar-label">{item.name}</span>
+              </Link>
+              <span className="sidebar-tooltip">{item.name}</span>
+            </li>
+          ))}
+
+          <div className="sidebar-divider" style={{ marginTop: "auto" }} />
+
+          {logoutItem && (
+            <li className="logout-item">
+              <Link to={logoutItem.path}>
+                <div className="icon">{logoutItem.icon}</div>
+                <span className="sidebar-label">{logoutItem.name}</span>
+              </Link>
+              <span className="sidebar-tooltip">{logoutItem.name}</span>
+            </li>
+          )}
+        </ul>
       </div>
 
-      <ul>
-        {/* Nav links */}
-        {navItems.map((item, idx) => (
-          <li
+      {/* ── Bottom nav: mobile only (≤ 540px) ── */}
+      <nav className="sidebar-bottom-nav">
+        {allVisible.map((item, idx) => (
+          <Link
             key={idx}
-            className={location.pathname === item.path ? "active" : ""}
+            to={item.path}
+            className={[
+              location.pathname === item.path ? "active" : "",
+              item.isLogout ? "logout-bottom" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
           >
-            <Link to={item.path}>
-              <div className="icon">{item.icon}</div>
-              <span>{item.name}</span>
-            </Link>
-          </li>
+            <div className="bn-icon">{item.icon}</div>
+            <span>{item.name}</span>
+          </Link>
         ))}
-
-        {/* Divider */}
-        <div className="sidebar-divider" style={{ marginTop: "auto" }} />
-
-        {/* Logout */}
-        {logoutItem && (
-          <li className="logout-item">
-            <Link to={logoutItem.path}>
-              <div className="icon">{logoutItem.icon}</div>
-              <span>{logoutItem.name}</span>
-            </Link>
-          </li>
-        )}
-      </ul>
-    </div>
+      </nav>
+    </>
   );
 };
 
