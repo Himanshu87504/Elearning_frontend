@@ -1,138 +1,514 @@
-.users {
-  max-width: 900px;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap');
+
+:root {
+  --au-bg: #f5f4f1;
+  --au-surface: #ffffff;
+  --au-purple: #5b3fc4;
+  --au-purple-soft: #eeebfb;
+  --au-purple-dark: #3c3489;
+  --au-purple-mid: #afa9ec;
+  --au-green-soft: #e1f5ee;
+  --au-green-dark: #0f6e56;
+  --au-text: #1a1625;
+  --au-muted: #6e6a7c;
+  --au-border: rgba(0, 0, 0, 0.07);
+  --au-border-mid: rgba(0, 0, 0, 0.11);
+  --au-radius: 12px;
+  --au-radius-sm: 8px;
+  --au-focus: 0 0 0 3px rgba(91, 63, 196, 0.16);
 }
 
-.users .heading {
-  font-size: 18px;
+/* ── Page ── */
+.au-page {
+  font-family: 'DM Sans', sans-serif;
+  padding: 20px;
+  max-width: 860px;
+  background: var(--au-bg);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ── Header ── */
+.au-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.au-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--au-text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.au-title em {
+  font-style: italic;
+  color: var(--au-purple);
+}
+
+.au-sub {
+  font-size: 13px;
+  color: var(--au-muted);
+  margin-top: 4px;
+}
+
+/* Search */
+.au-search-wrap {
+  position: relative;
+}
+
+.au-search-wrap svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: var(--au-muted);
+  pointer-events: none;
+}
+
+.au-search {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--au-text);
+  padding: 8px 12px 8px 32px;
+  background: var(--au-surface);
+  border: 0.5px solid var(--au-border-mid);
+  border-radius: var(--au-radius-sm);
+  outline: none;
+  width: 200px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.au-search::placeholder {
+  color: #c0bcd0;
+}
+
+.au-search:focus {
+  border-color: var(--au-purple);
+  box-shadow: var(--au-focus);
+}
+
+/* ── Stats ── */
+.au-stats {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.au-stat {
+  flex: 1;
+  background: var(--au-surface);
+  border: 0.5px solid var(--au-border-mid);
+  border-radius: var(--au-radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.au-stat-num {
+  font-size: 20px;
   font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  color: var(--au-text);
+  line-height: 1;
 }
 
-/* ── Table wrapper ── */
-.users-table-wrap {
-  background: #fff;
-  border: 0.5px solid rgba(0, 0, 0, 0.09);
-  border-radius: 12px;
+.au-stat-label {
+  font-size: 11px;
+  color: var(--au-muted);
+}
+
+/* ── Table card ── */
+.au-table-wrap {
+  background: var(--au-surface);
+  border: 0.5px solid var(--au-border-mid);
+  border-radius: var(--au-radius);
   overflow: hidden;
 }
 
-.users-table-wrap table {
+.au-table-wrap table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  table-layout: fixed;
+}
+
+/* Column widths — desktop */
+.au-col-num {
+  width: 36px;
+}
+
+.au-col-user {
+  width: auto;
+}
+
+.au-col-role {
+  width: 88px;
+}
+
+.au-col-action {
+  width: 120px;
 }
 
 /* Head */
-.users-table-wrap thead tr {
-  background: #fafafa;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+.au-table-wrap thead tr {
+  background: #faf9ff;
+  border-bottom: 0.5px solid var(--au-border-mid);
 }
 
-.users-table-wrap thead td {
-  padding: 12px 16px;
-  font-size: 11px;
+.au-table-wrap thead th {
+  padding: 11px 12px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #888;
+  letter-spacing: 0.07em;
+  color: var(--au-muted);
+  text-align: left;
 }
 
-/* Body rows */
-.users-table-wrap tbody tr {
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+/* Body */
+.au-table-wrap tbody tr {
+  border-bottom: 0.5px solid var(--au-border);
   transition: background 0.1s;
 }
 
-.users-table-wrap tbody tr:last-child {
+.au-table-wrap tbody tr:last-child {
   border-bottom: none;
 }
 
-.users-table-wrap tbody tr:hover {
-  background: #fafaf9;
+.au-table-wrap tbody tr:hover {
+  background: #faf9ff;
 }
 
-.users-table-wrap tbody td {
-  padding: 13px 16px;
-  color: #333;
+.au-table-wrap tbody td {
+  padding: 10px 12px;
+  color: var(--au-text);
   vertical-align: middle;
+  overflow: hidden;
 }
 
-/* # column */
-.users-table-wrap tbody td:first-child {
-  color: #bbb;
+.au-num {
+  color: #ccc;
   font-size: 12px;
-  width: 40px;
 }
 
-/* Avatar + name cell */
-.user-name-cell {
+/* ── Name cell ── */
+.au-name-cell {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
+  min-width: 0;
 }
 
-.user-avatar {
+.au-name-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.au-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--au-text);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Email: truncated with max-width */
+.au-email {
+  font-size: 11px;
+  color: var(--au-muted);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  /* hard cap — trims long gmail addresses */
+}
+
+/* Avatar */
+.au-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #EEEDFE;
-  color: #534AB7;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-/* Role badge */
-.role-badge {
+.au-avatar--admin {
+  background: var(--au-purple-soft);
+  color: var(--au-purple-dark);
+}
+
+.au-avatar--user {
+  background: var(--au-green-soft);
+  color: var(--au-green-dark);
+}
+
+/* ── Role badge ── */
+.au-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.au-badge--admin {
+  background: var(--au-purple-soft);
+  color: var(--au-purple-dark);
+}
+
+.au-badge--user {
+  background: var(--au-green-soft);
+  color: var(--au-green-dark);
+}
+
+/* ── Action button — desktop: icon + label ── */
+.au-btn {
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-}
-
-.role-badge.admin {
-  background: #EEEDFE;
-  color: #3C3489;
-}
-
-.role-badge.user {
-  background: #E1F5EE;
-  color: #0F6E56;
-}
-
-/* Update role button */
-.update-role-btn {
-  padding: 6px 14px;
-  border: 0.5px solid rgba(0, 0, 0, 0.13);
-  border-radius: 7px;
+  padding: 6px 11px;
+  border: 0.5px solid var(--au-border-mid);
+  border-radius: var(--au-radius-sm);
   background: #fff;
-  font-size: 13px;
-  font-weight: 500;
   color: #444;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
   transition: background 0.12s, border-color 0.12s, color 0.12s;
-  font-family: inherit;
 }
 
-.update-role-btn:hover {
-  background: #EEEDFE;
-  border-color: #AFA9EC;
-  color: #3C3489;
+.au-btn:hover:not(:disabled) {
+  background: var(--au-purple-soft);
+  border-color: var(--au-purple-mid);
+  color: var(--au-purple-dark);
 }
 
-/* Empty state */
-.users-empty {
-  padding: 40px;
+.au-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.au-btn-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.au-btn-label {
+  line-height: 1;
+}
+
+/* ── Spinner ── */
+.au-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(91, 63, 196, 0.2);
+  border-top-color: var(--au-purple);
+  border-radius: 50%;
+  animation: au-spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+.au-spinner--sm {
+  width: 12px;
+  height: 12px;
+  border-width: 1.5px;
+}
+
+@keyframes au-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Loading / Empty ── */
+.au-loading {
+  padding: 48px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--au-muted);
   font-size: 14px;
-  color: #aaa;
+}
+
+.au-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--au-muted);
+}
+
+.au-empty svg {
+  width: 34px;
+  height: 34px;
+  opacity: 0.28;
+  margin-bottom: 10px;
+}
+
+.au-empty p {
+  font-size: 14px;
+}
+
+.au-clear-btn {
+  font-family: 'DM Sans', sans-serif;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--au-purple);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ══════════════════════════════
+   MOBILE  ≤ 600px
+   - email truncated shorter
+   - role badge stays readable
+   - button = icon only (40×40 tap target)
+   - col widths recalculated
+══════════════════════════════ */
+@media (max-width: 600px) {
+  .au-page {
+    padding: 12px;
+  }
+
+  .au-title {
+    font-size: 22px;
+  }
+
+  .au-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .au-search {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .au-search-wrap {
+    width: 100%;
+  }
+
+  /* Recalculate columns to fit ~360px */
+  .au-col-num {
+    width: 28px;
+  }
+
+  .au-col-role {
+    width: 66px;
+  }
+
+  .au-col-action {
+    width: 42px;
+  }
+
+  /* icon only */
+
+  /* Tighter padding */
+  .au-table-wrap thead th,
+  .au-table-wrap tbody td {
+    padding: 9px 8px;
+  }
+
+  /* Shorter email on mobile */
+  .au-email {
+    max-width: 110px;
+    font-size: 10.5px;
+  }
+
+  /* Smaller avatar */
+  .au-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 10px;
+  }
+
+  .au-name-cell {
+    gap: 7px;
+  }
+
+  .au-name {
+    font-size: 12.5px;
+  }
+
+  /* Badge — keep font readable */
+  .au-badge {
+    font-size: 10.5px;
+    padding: 3px 8px;
+  }
+
+  /* Button: icon-only circle */
+  .au-btn-label {
+    display: none;
+  }
+
+  .au-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  .au-btn-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Stats smaller */
+  .au-stats {
+    gap: 8px;
+  }
+
+  .au-stat {
+    padding: 10px 10px;
+  }
+
+  .au-stat-num {
+    font-size: 17px;
+  }
+
+  .au-stat-label {
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .au-email {
+    max-width: 80px;
+  }
+
+  .au-col-role {
+    width: 58px;
+  }
+
+  .au-badge {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
 }
