@@ -25,7 +25,7 @@ const Home = () => {
             </div>
 
             <h1 className="home-title">
-              Learn. Grow.<br /><em>Excel.</em>
+              Learn. Grow<br /><em>Excel.</em>
             </h1>
 
             <p className="home-tagline">Your journey starts here.</p>
